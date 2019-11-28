@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpr lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -25,16 +25,78 @@
       bordered
       content-class="bg-grey-2"
     >
-      <q-list>
-        <q-item-label header>课程管理</q-item-label>
-        <q-item clickable tag="a" target="_blank" @click="course_manage">
+
+      <q-list bordered padding class="rounded-borders text-primary">
+        <q-item
+          clickable
+          v-ripple
+          :active="link === 'inbox'"
+          @click="link = 'inbox'"
+          active-class="my-menu-link"
+        >
           <q-item-section avatar>
-            <q-icon name="school"/>
+            <q-icon name="inbox" />
           </q-item-section>
-          <q-item-section>
-            <q-item-label>Docs</q-item-label>
-            <q-item-label caption>quasar.dev</q-item-label>
+
+          <q-item-section>课程管理</q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          v-ripple
+          :active="link === 'outbox'"
+          @click="link = 'outbox'"
+          active-class="my-menu-link"
+        >
+          <q-item-section avatar>
+            <q-icon name="send" />
           </q-item-section>
+
+          <q-item-section>学生管理</q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          v-ripple
+          :active="link === 'trash'"
+          @click="link = 'trash'"
+          active-class="my-menu-link"
+        >
+          <q-item-section avatar>
+            <q-icon name="delete" />
+          </q-item-section>
+
+          <q-item-section>考试管理</q-item-section>
+        </q-item>
+
+        <q-separator spaced />
+
+        <q-item
+          clickable
+          v-ripple
+          :active="link === 'settings'"
+          @click="link = 'settings'"
+          active-class="my-menu-link"
+        >
+          <q-item-section avatar>
+            <q-icon name="settings" />
+          </q-item-section>
+
+          <q-item-section>设置</q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          v-ripple
+          :active="link === 'help'"
+          @click="link = 'help'"
+          active-class="my-menu-link"
+        >
+          <q-item-section avatar>
+            <q-icon name="help" />
+          </q-item-section>
+
+          <q-item-section>帮助</q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
@@ -53,26 +115,11 @@
 
     data () {
       return {
-        leftDrawerOpen: false
+        link: 'inbox',
+        leftDrawerOpen: true
       }
     }, methods: {
       course_manage () {
-        let that = this
-        axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'  //此处是增加的代码，设置请求头的类型
-        return axios.post(that.$store.state.url_paths.check_login, {
-          teacherTelephone: 'teacher_telephone',
-          teacherPassword: 'teacher_password'
-        })
-          .then(function (response) {
-            console.log(response.data)
-            if (response.data === false) {
-              that.$router.push('/course_manage')
-            }
-          })
-          .catch(function (error) {
-            return error.data
-          })
-
       }
     }
   }

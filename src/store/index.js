@@ -17,6 +17,8 @@ export default function (/* { ssrContext } */) {
 
     state: {
 
+      courses: null,
+
       teacher_info: {
         teacher_id: '01',
         teacher_name: 'name',
@@ -26,10 +28,19 @@ export default function (/* { ssrContext } */) {
       },
 
       url_paths: {
-        check_login: hostname + 'teacherLoginForWeb'
+        check_login: hostname + 'teacherLoginForWeb',
+        get_course: hostname + 'getTeacherNameAndCourseByTelephone',
+        delete_course: hostname + 'deleteCourseByCourseId'
       }
     },
-
+    mutations: {
+      updateCourse (state, courses) {
+        state.courses = courses
+      },
+      updateTeacherName (state, teachername) {
+        state.teacher_info.teacher_name = teachername
+      }
+    },
     modules: {
       // example
     },
