@@ -1,17 +1,17 @@
-
 const routes = [
   {
     path: '/index',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      { path: '/course_manage', component: () => import('pages/CourseManage.vue') }
+      { path: '/course_manage', component: () => import('pages/CourseManage.vue') },
+      { path: '/course_info', component: () => import('pages/CourseInfo.vue') }
     ]
   },
   {
     path: '/',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Login.vue')}
+      { path: '', component: () => import('pages/Login.vue') }
     ]
   }
 ]

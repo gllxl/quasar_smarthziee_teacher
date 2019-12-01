@@ -1,7 +1,8 @@
 <template>
   <q-page padding>
     <div class="q-pa-md row items-start q-gutter-md">
-      <q-card v-for="(item,i) in course" :id="item.courseId" class="my-card" @click="course_info(item.courseId)">
+      <q-card v-for="(item,i) in this.$store.state.courses" :id="item.courseId" class="my-card"
+              @click="course_info(item.courseId)">
         <q-img
           src="https://cdn.quasar.dev/img/parallax2.jpg"
           basic
@@ -16,16 +17,30 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
+  const Qs = require('qs')
+
   export default {
     name: 'CourseManage',
+
     data () {
-      let state = this.$store.state || {}
-      return {
-        course: state.courses
-      }
+      return {}
     }, methods: {
-      course_info (courseId) {
-        console.log(courseId)
+      course_info (course_id) {
+        let that = this
+        axios.post(that.$store.state.url_paths.course_info, Qs.stringify({
+          course_id: course_id
+        }))
+          .then(function (response) {
+            that.$store.commit('updateNowCourseLocation', course_id)
+            that.$store.commit('updateData', response.data.courseDetails)
+            that.$store.commit('updateTabs', 'course_info')
+            that.$router.push('/course_info')
+          })
+          .catch(function (error) {
+            that.$q.notify({ message: '获取课程信息失败', position: 'top', color: 'danger' })
+          })
       }
     }
   }

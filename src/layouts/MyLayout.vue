@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpr lFf">
+  <q-layout view="lHh lpr lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -17,6 +17,17 @@
 
         <div>{{this.$store.state.teacher_info.teacher_name}}</div>
       </q-toolbar>
+
+      <q-tabs
+        v-model="tab"
+        inline-label
+        align="left"
+      >
+        <q-tab v-for="(item,i) in this.$store.state.now_location.tab" :icon="item.icon" :name="item.name"
+               :label="item.label"/>
+
+      </q-tabs>
+
     </q-header>
 
     <q-drawer
@@ -30,12 +41,12 @@
         <q-item
           clickable
           v-ripple
-          :active="link === 'inbox'"
-          @click="link = 'inbox'"
+          :active="link === 'course'"
+          @click="goCourse"
           active-class="my-menu-link"
         >
           <q-item-section avatar>
-            <q-icon name="inbox" />
+            <q-icon name="inbox"/>
           </q-item-section>
 
           <q-item-section>课程管理</q-item-section>
@@ -44,12 +55,12 @@
         <q-item
           clickable
           v-ripple
-          :active="link === 'outbox'"
-          @click="link = 'outbox'"
+          :active="link === 'student'"
+          @click="goStudent"
           active-class="my-menu-link"
         >
           <q-item-section avatar>
-            <q-icon name="send" />
+            <q-icon name="send"/>
           </q-item-section>
 
           <q-item-section>学生管理</q-item-section>
@@ -58,18 +69,18 @@
         <q-item
           clickable
           v-ripple
-          :active="link === 'trash'"
-          @click="link = 'trash'"
+          :active="link === 'exam'"
+          @click="goExam"
           active-class="my-menu-link"
         >
           <q-item-section avatar>
-            <q-icon name="delete" />
+            <q-icon name="delete"/>
           </q-item-section>
 
           <q-item-section>考试管理</q-item-section>
         </q-item>
 
-        <q-separator spaced />
+        <q-separator spaced/>
 
         <q-item
           clickable
@@ -79,7 +90,7 @@
           active-class="my-menu-link"
         >
           <q-item-section avatar>
-            <q-icon name="settings" />
+            <q-icon name="settings"/>
           </q-item-section>
 
           <q-item-section>设置</q-item-section>
@@ -93,7 +104,7 @@
           active-class="my-menu-link"
         >
           <q-item-section avatar>
-            <q-icon name="help" />
+            <q-icon name="help"/>
           </q-item-section>
 
           <q-item-section>帮助</q-item-section>
@@ -112,14 +123,23 @@
 
   export default {
     name: 'MyLayout',
-
     data () {
       return {
-        link: 'inbox',
+        tab: this.$store.state.now_location.tab[0].name,
+        link: 'course',
         leftDrawerOpen: true
       }
     }, methods: {
-      course_manage () {
+      goCourse () {
+        this.link = 'course'
+        this.$store.commit('updateTabs', 'index')
+        this.$router.push('/course_manage')
+      },
+      goStudent () {
+        this.link = 'student'
+      },
+      goExam () {
+        this.link = 'exam'
       }
     }
   }

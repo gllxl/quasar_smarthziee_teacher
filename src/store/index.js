@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import da from 'quasar/lang/da'
 
 // import example from './module-example'
 
@@ -18,6 +19,20 @@ export default function (/* { ssrContext } */) {
     state: {
 
       courses: null,
+      now_location: {
+        location: 'index',
+        id: null,
+        data: null,
+        tab: [{
+          name: 'info',
+          label: '我的课程',
+          icon: 'book'
+        }, {
+          name: 'add',
+          label: '添加课程',
+          icon: 'add'
+        }]
+      },
 
       teacher_info: {
         teacher_id: '01',
@@ -30,7 +45,8 @@ export default function (/* { ssrContext } */) {
       url_paths: {
         check_login: hostname + 'teacherLoginForWeb',
         get_course: hostname + 'getTeacherNameAndCourseByTelephone',
-        delete_course: hostname + 'deleteCourseByCourseId'
+        delete_course: hostname + 'deleteCourseByCourseId',
+        course_info: hostname + 'teacher/getCourseDetailsByCourseId'
       }
     },
     mutations: {
@@ -39,6 +55,42 @@ export default function (/* { ssrContext } */) {
       },
       updateTeacherName (state, teachername) {
         state.teacher_info.teacher_name = teachername
+      },
+      updateNowCourseLocation (state, location) {
+        state.now_location.location = 'course_info'
+        state.now_location.id = location
+      },
+      updateData (state, data) {
+        state.now_location.data = data
+      },
+      updateTabs (state, tab) {
+        if (tab === 'index') {
+          state.now_location.tab = [{
+            name: 'info',
+            label: '我的课程',
+            icon: 'book'
+          }, {
+            name: 'add',
+            label: '添加课程',
+            icon: 'add'
+          }]
+        } else if (tab === 'course_info') {
+          state.now_location.tab = [{
+            name: 'info',
+            label: '课程信息',
+            icon: 'book'
+          }, {
+            name: 'add',
+            label: '学生管理',
+            icon: 'add'
+          },
+            {
+              name: 'add',
+              label: '考试管理',
+              icon: 'add'
+            }]
+        }
+
       }
     },
     modules: {

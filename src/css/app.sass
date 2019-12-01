@@ -2,6 +2,25 @@
 .my-menu-link
   color: white
   background: #027BE3
+
 .my-card
   width: 100%
   max-width: 250px
+
+.my-sticky-column-table
+  /* specifying max-width so the example can
+    highlight the sticky column on any browser window */
+  max-width: 700px
+
+  thead tr:first-child th:first-child
+    /* bg color is important for th; just specify one */
+    background-color: #fff
+
+  td:first-child
+    background-color: #f5f5dc
+
+  th:first-child,
+  td:first-child
+    position: sticky
+    left: 0
+    z-index: 1

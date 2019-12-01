@@ -48,7 +48,6 @@
           .catch(function (error) {
             that.$q.notify({ message: '登录失败', position: 'top', color: 'danger' })
           })
-
       }
     }
   }
