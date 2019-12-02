@@ -23,8 +23,8 @@
         inline-label
         align="left"
       >
-        <q-tab v-for="(item,i) in this.$store.state.now_location.tab" :icon="item.icon" :name="item.name"
-               :label="item.label"/>
+        <q-tab v-for="(item,i) in this.$store.state.now_location.tab" :icon="item.icon"
+               :name="$store.state.now_location.tab[i].name" :label="item.label" @click="TabA(item.label)"/>
 
       </q-tabs>
 
@@ -130,9 +130,14 @@
         leftDrawerOpen: true
       }
     }, methods: {
+      getTab () {
+        this.tab = this.$store.state.now_location.tab[0].name
+      },
       goCourse () {
         this.link = 'course'
         this.$store.commit('updateTabs', 'index')
+        console.log(this.$store.state.now_location)
+        this.getTab()
         this.$router.push('/course_manage')
       },
       goStudent () {
@@ -140,6 +145,17 @@
       },
       goExam () {
         this.link = 'exam'
+      },
+      TabA (e) {
+        if (e === '添加课程') {
+          this.$router.push('/add_course')
+        } else if (e === '考试管理') {
+          this.$router.push('/exam_manage')
+          this.getTab()
+        } else if (e === '我的课程') {
+          this.$router.push('/course_manage')
+          this.getTab()
+        }
       }
     }
   }

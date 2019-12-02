@@ -1,8 +1,7 @@
 <template>
   <q-page padding>
     <div class="q-pa-md row items-start q-gutter-md">
-      <q-card v-for="(item,i) in this.$store.state.courses" :id="item.courseId" class="my-card"
-              @click="course_info(item.courseId)">
+      <q-card  class="my-card" v-for="(item,i) in this.$store.state.courses" @click="course_info(item.courseId)">
         <q-img
           src="https://cdn.quasar.dev/img/parallax2.jpg"
           basic
@@ -33,9 +32,9 @@
           course_id: course_id
         }))
           .then(function (response) {
+            that.$store.commit('updateTabs', 'course_info')
             that.$store.commit('updateNowCourseLocation', course_id)
             that.$store.commit('updateData', response.data.courseDetails)
-            that.$store.commit('updateTabs', 'course_info')
             that.$router.push('/course_info')
           })
           .catch(function (error) {

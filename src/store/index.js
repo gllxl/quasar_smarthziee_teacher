@@ -17,18 +17,18 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
 
     state: {
-
+      exams: null,
       courses: null,
       now_location: {
         location: 'index',
         id: null,
         data: null,
         tab: [{
-          name: 'info',
+          name: 'course_info',
           label: '我的课程',
           icon: 'book'
         }, {
-          name: 'add',
+          name: 'course_add',
           label: '添加课程',
           icon: 'add'
         }]
@@ -46,10 +46,15 @@ export default function (/* { ssrContext } */) {
         check_login: hostname + 'teacherLoginForWeb',
         get_course: hostname + 'getTeacherNameAndCourseByTelephone',
         delete_course: hostname + 'deleteCourseByCourseId',
-        course_info: hostname + 'teacher/getCourseDetailsByCourseId'
-      }
+        course_info: hostname + 'teacher/getCourseDetailsByCourseId',
+        add_course: hostname + 'taecher/addCourse',
+        get_exam: hostname + '/teacher/getExamByCourseId'
+      },
     },
     mutations: {
+      updateExam (state, exams) {
+        state.exams = exams
+      },
       updateCourse (state, courses) {
         state.courses = courses
       },
@@ -66,29 +71,39 @@ export default function (/* { ssrContext } */) {
       updateTabs (state, tab) {
         if (tab === 'index') {
           state.now_location.tab = [{
-            name: 'info',
+            name: 'my_course_info',
             label: '我的课程',
             icon: 'book'
           }, {
-            name: 'add',
+            name: 'course_add',
             label: '添加课程',
             icon: 'add'
           }]
         } else if (tab === 'course_info') {
           state.now_location.tab = [{
-            name: 'info',
+            name: 'course_info',
             label: '课程信息',
             icon: 'book'
           }, {
-            name: 'add',
+            name: 'course_student',
             label: '学生管理',
             icon: 'add'
           },
             {
-              name: 'add',
+              name: 'course_exam',
               label: '考试管理',
               icon: 'add'
             }]
+        } else if (tab === 'exam_manage') {
+          state.now_location.tab = [{
+            name: 'exam_info',
+            label: '考试管理',
+            icon: 'book'
+          }, {
+            name: 'exam_add',
+            label: '添加考试',
+            icon: 'add'
+          }]
         }
 
       }

@@ -11,6 +11,9 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
+  const Qs = require('qs')
   export default {
     name: 'CourseInfo',
     data () {
@@ -55,8 +58,9 @@
           },
         ]
       }
-    },mounted(){
-      this.getCourseInfo();
+    }, mounted () {
+      this.getCourseInfo()
+      this.getExams()
     }, methods: {
       getCourseInfo () {
         this.data[0].info = this.$store.state.now_location.data.courseId
@@ -64,6 +68,18 @@
         this.data[2].info = this.$store.state.now_location.data.courseClass
         this.data[3].info = this.$store.state.now_location.data.courseTime
         this.data[4].info = this.$store.state.now_location.data.courseNumber
+      },
+      getExams () {
+        let that = this
+        axios.post(that.$store.state.url_paths.get_exam, Qs.stringify({
+          course_id: that.$store.state.now_location.data.courseId
+        }))
+          .then(function (response) {
+            that.$store.commit('updateExam', response.data.ExamInfo)
+          })
+          .catch(function (error) {
+            that.$q.notify({ message: '获取课程信息失败', position: 'top', color: 'danger' })
+          })
       }
     }
   }
