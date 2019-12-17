@@ -45,13 +45,13 @@
 
   const Qs = require('qs')
   export default {
-    name: 'AddCourse',
+    name: 'AddExam',
     data () {
       return {
-        dense: false,
-        name: null,
-        classroom: null,
-        classtime: null
+        exam_name: null,
+        exam_time_begin: null,
+        exam_time_end: null,
+        
       }
     },
 

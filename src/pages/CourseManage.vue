@@ -28,6 +28,7 @@
     }, methods: {
       course_info (course_id) {
         let that = this
+        this.$emit('getMessage', "传给父组件的值");
         axios.post(that.$store.state.url_paths.course_info, Qs.stringify({
           course_id: course_id
         }))

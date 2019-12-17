@@ -112,7 +112,7 @@
       </q-list>
     </q-drawer>
     <q-page-container>
-      <router-view/>
+      <router-view @getMessage="showMsg"></router-view>
     </q-page-container>
   </q-layout>
 </template>
@@ -130,6 +130,10 @@
         leftDrawerOpen: true
       }
     }, methods: {
+      showMsg (val) {   // methods方法  val即为子组件传过来的值
+        console.log(val)
+        this.tab = this.$store.state.now_location.tab[0].name
+      },
       getTab () {
         this.tab = this.$store.state.now_location.tab[0].name
       },
@@ -154,6 +158,12 @@
           this.getTab()
         } else if (e === '我的课程') {
           this.$router.push('/course_manage')
+          this.getTab()
+        } else if (e === '课程信息') {
+          this.$router.push('/course_info')
+          this.getTab()
+        } else if (e === '考试信息') {
+          this.$router.push('/exam_info')
           this.getTab()
         }
       }

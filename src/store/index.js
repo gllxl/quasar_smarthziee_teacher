@@ -48,10 +48,15 @@ export default function (/* { ssrContext } */) {
         delete_course: hostname + 'deleteCourseByCourseId',
         course_info: hostname + 'teacher/getCourseDetailsByCourseId',
         add_course: hostname + 'taecher/addCourse',
-        get_exam: hostname + '/teacher/getExamByCourseId'
+        get_exam: hostname + 'teacher/getExamByCourseId',
+        exam_info: hostname + 'teacher/getExamDetailsByExamId'
       },
     },
     mutations: {
+      updateNowExamLocation (state, lacation) {
+        state.now_location.location = 'exam_info'
+        state.now_location.id = lacation
+      },
       updateExam (state, exams) {
         state.exams = exams
       },
@@ -99,6 +104,10 @@ export default function (/* { ssrContext } */) {
             name: 'exam_info',
             label: '考试管理',
             icon: 'book'
+          }, {
+            name: 'subject_info',
+            label: '题目管理',
+            icon: 'exam'
           }, {
             name: 'exam_add',
             label: '添加考试',

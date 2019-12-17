@@ -39,49 +39,36 @@
 
         data: [
           {
-            name: '课程代码',
+            name: '考试名称',
             info: 'html',
           }, {
-            name: '课程名称',
+            name: '考试详情',
             info: 'html',
           }, {
-            name: '上课教室',
+            name: '监考老师',
             info: 'html',
           },
           {
-            name: '上课时间',
+            name: '考试开始时间',
             info: 'html',
           },
           {
-            name: '学生人数',
+            name: '考试结束时间',
             info: 'html',
           },
         ]
       }
     }, mounted () {
-      this.getCourseInfo()
-      this.getExams()
       this.$emit('getMessage', "传给父组件的值");
+      this.getCourseInfo()
     }, methods: {
-      getCourseInfo () {
+      getExamInfo () {
         this.data[0].info = this.$store.state.now_location.data.courseId
         this.data[1].info = this.$store.state.now_location.data.courseName
         this.data[2].info = this.$store.state.now_location.data.courseClass
         this.data[3].info = this.$store.state.now_location.data.courseTime
         this.data[4].info = this.$store.state.now_location.data.courseNumber
       },
-      getExams () {
-        let that = this
-        axios.post(that.$store.state.url_paths.get_exam, Qs.stringify({
-          course_id: that.$store.state.now_location.data.courseId
-        }))
-          .then(function (response) {
-            that.$store.commit('updateExam', response.data.ExmanInfo)
-          })
-          .catch(function (error) {
-            that.$q.notify({ message: '获取课程信息失败', position: 'top', color: 'danger' })
-          })
-      }
     }
   }
 </script>
