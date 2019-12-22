@@ -8,7 +8,9 @@ const routes = [
       { path: '/add_course', component: () => import('pages/AddCourse.vue') },
       { path: '/exam_manage', component: () => import('pages/ExamManage.vue') },
       { path: '/exam_info', component: () => import('pages/ExamInfo.vue') },
-      { path: '/add_exam', component: () => import('pages/AddExam.vue') }
+      { path: '/add_exam', component: () => import('pages/AddExam.vue') },
+      { path: '/stu_info', component: () => import('pages/StuInfo.vue') },
+      { path: '/ques_info', component: () => import('pages/QuesInfo.vue') }
     ]
   },
   {

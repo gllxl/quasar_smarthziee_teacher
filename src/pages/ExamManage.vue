@@ -34,13 +34,14 @@
           exam_id: exam_id
         }))
           .then(function (response) {
+            console.log(response);
             that.$store.commit('updateTabs', 'exam_info')
             that.$store.commit('updateNowExamLocation', exam_id)
-            that.$store.commit('updateData', response.data.courseDetails)
+            that.$store.commit('updateData', response.data.ExamDetails);
             that.$router.push('/exam_info')
           })
           .catch(function (error) {
-            that.$q.notify({ message: '获取课程信息失败', position: 'top', color: 'danger' })
+            that.$q.notify({ message: '获取考试信息失败', position: 'top', color: 'danger' })
           })
         this.$store.commit('updateTabs', 'exam_manage')
       }

@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          SmartHziee教师管理系统
         </q-toolbar-title>
 
         <div>{{this.$store.state.teacher_info.teacher_name}}</div>
@@ -155,15 +155,27 @@
           this.$router.push('/add_course')
         } else if (e === '考试管理') {
           this.$router.push('/exam_manage')
+          this.link = 'exam'
           this.getTab()
         } else if (e === '我的课程') {
           this.$router.push('/course_manage')
+          this.link = 'course'
           this.getTab()
         } else if (e === '课程信息') {
           this.$router.push('/course_info')
+          this.link = 'course'
           this.getTab()
         } else if (e === '考试信息') {
           this.$router.push('/exam_info')
+          this.link = 'exam'
+          this.getTab()
+        }else if (e === '学生管理') {
+          this.$router.push('/stu_info')
+          this.link = 'student'
+          this.getTab()
+        }else if (e === '题目管理') {
+          this.$router.push('/ques_info')
+          this.link = 'exam'
           this.getTab()
         }
       }

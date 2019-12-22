@@ -49,7 +49,9 @@ export default function (/* { ssrContext } */) {
         course_info: hostname + 'teacher/getCourseDetailsByCourseId',
         add_course: hostname + 'taecher/addCourse',
         get_exam: hostname + 'teacher/getExamByCourseId',
-        exam_info: hostname + 'teacher/getExamDetailsByExamId'
+        exam_info: hostname + 'teacher/getExamDetailsByExamId',
+        stu_info:hostname + 'teacher/getAllStuInfoByCourseId',
+        ques_info:hostname + 'teacher/getAllQuestionByExamId'
       },
     },
     mutations: {
@@ -92,22 +94,22 @@ export default function (/* { ssrContext } */) {
           }, {
             name: 'course_student',
             label: '学生管理',
-            icon: 'add'
+            icon: 'people'
           },
             {
               name: 'course_exam',
               label: '考试管理',
-              icon: 'add'
+              icon: 'library_books'
             }]
         } else if (tab === 'exam_manage') {
           state.now_location.tab = [{
             name: 'exam_info',
             label: '考试管理',
-            icon: 'book'
+            icon: 'library_books'
           }, {
             name: 'subject_info',
             label: '题目管理',
-            icon: 'exam'
+            icon: 'subject'
           }, {
             name: 'exam_add',
             label: '添加考试',

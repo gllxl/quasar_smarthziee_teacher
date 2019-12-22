@@ -60,14 +60,14 @@
       }
     }, mounted () {
       this.$emit('getMessage', "传给父组件的值");
-      this.getCourseInfo()
+      this.getExamInfo()
     }, methods: {
       getExamInfo () {
-        this.data[0].info = this.$store.state.now_location.data.courseId
-        this.data[1].info = this.$store.state.now_location.data.courseName
-        this.data[2].info = this.$store.state.now_location.data.courseClass
-        this.data[3].info = this.$store.state.now_location.data.courseTime
-        this.data[4].info = this.$store.state.now_location.data.courseNumber
+        this.data[0].info = this.$store.state.now_location.data.examName
+        this.data[1].info = this.$store.state.now_location.data.examDetails
+        this.data[2].info = this.$store.state.now_location.data.examPublisher
+        this.data[3].info = this.$store.state.now_location.data.examTimeBegin
+        this.data[4].info = this.$store.state.now_location.data.examTimeEnd
       },
     }
   }
