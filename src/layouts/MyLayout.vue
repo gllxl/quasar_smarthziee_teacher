@@ -112,7 +112,7 @@
       </q-list>
     </q-drawer>
     <q-page-container>
-      <router-view @getMessage="showMsg"></router-view>
+      <router-view v-if="isRouterAlive" @getMessage="showMsg" ></router-view>
     </q-page-container>
   </q-layout>
 </template>
@@ -123,13 +123,25 @@
 
   export default {
     name: 'MyLayout',
+    provide () {
+      return {
+        reload: this.reload
+      }
+    },
     data () {
       return {
         tab: this.$store.state.now_location.tab[0].name,
         link: 'course',
-        leftDrawerOpen: true
+        leftDrawerOpen: true,
+        isRouterAlive: true
       }
     }, methods: {
+      reload () {
+        this.isRouterAlive = false
+        this.$nextTick(function () {
+          this.isRouterAlive = true
+        })
+      },
       showMsg (val) {   // methods方法  val即为子组件传过来的值
         console.log(val)
         this.tab = this.$store.state.now_location.tab[0].name
@@ -175,6 +187,14 @@
           this.getTab()
         }else if (e === '题目管理') {
           this.$router.push('/ques_info')
+          this.link = 'exam'
+          this.getTab()
+        }else if (e === '考试信息') {
+          this.$router.push('/exam_info')
+          this.link = 'exam'
+          this.getTab()
+        }else if (e === '添加考试') {
+          this.$router.push('/add_exam')
           this.link = 'exam'
           this.getTab()
         }

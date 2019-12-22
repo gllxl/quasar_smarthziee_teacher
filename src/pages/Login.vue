@@ -1,7 +1,9 @@
 <template>
   <q-page padding class="flex content-center justify-center">
-    <div style="width: 300px; max-width: 90vw;">
-      <q-input outlined v-model="telephone" label="手机号"/>
+
+    <div style="width: 300px; max-width: 120vw;">
+      <div class="text-center text-h4">教师管理系统</div>
+      <q-input style="padding-top: 40px" outlined v-model="telephone" label="手机号"/>
       <q-input style="margin-top: 30px" outlined v-model="password" type="password" label="密码"/>
       <q-btn style="margin-top: 30px" color="primary" class="full-width" label="登录" @click="login"/>
     </div>

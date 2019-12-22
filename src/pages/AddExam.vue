@@ -8,31 +8,60 @@
     >
       <q-input
         filled
-        v-model="name"
-        label="课程名称"
+        v-model="exam_name"
+        label="考试名称"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入课程名称']"
+        :rules="[ val => val && val.length > 0 || '请输入考试名称']"
       />
-
       <q-input
         filled
-        v-model="classroom"
-        label="上课教室"
+        v-model="exam_publisher"
+        label="监考老师"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入上课教室']"
+        :rules="[ val => val && val.length > 0 || '请输入监考老师']"
       />
+      <div class="q-pb-sm q-gutter-sm">
+        <q-input filled v-model="exam_time_begin">
+          <template v-slot:prepend>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy transition-show="scale" transition-hide="scale">
+                <q-date v-model="exam_time_begin" mask="YYYY-MM-DD HH:mm" />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
 
-      <q-input
-        filled
-        v-model="classtime"
-        label="上课时间"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入上课时间']"
-      />
+          <template v-slot:append>
+            <q-icon name="access_time" class="cursor-pointer">
+              <q-popup-proxy transition-show="scale" transition-hide="scale">
+                <q-time v-model="exam_time_begin" mask="YYYY-MM-DD HH:mm" format24h />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+
+        <q-input filled v-model="exam_time_end">
+          <template v-slot:prepend>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy transition-show="scale" transition-hide="scale">
+                <q-date v-model="exam_time_end" mask="YYYY-MM-DD HH:mm" />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+
+          <template v-slot:append>
+            <q-icon name="access_time" class="cursor-pointer">
+              <q-popup-proxy transition-show="scale" transition-hide="scale">
+                <q-time v-model="exam_time_end" mask="YYYY-MM-DD HH:mm" format24h />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+
 
       <div>
-        <q-btn label="Submit" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm"/>
+        <q-btn label="提交" type="submit" color="primary"/>
+        <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm"/>
       </div>
     </q-form>
 
@@ -49,28 +78,30 @@
     data () {
       return {
         exam_name: null,
-        exam_time_begin: null,
-        exam_time_end: null,
-        
+        exam_time_begin: '2019-12-22 21:02',
+        exam_time_end: '2019-12-22 21:02',
+        exam_publisher: null,
+
       }
     },
 
     methods: {
       onSubmit () {
-        console.log(that.$store.state.teacher_info.teacher_telephone)
+
         let that = this
-        axios.post(that.$store.state.url_paths.add_course, Qs.stringify({
-          course_name: that.name,
-          course_class: that.classroom,
-          course_time: that.classtime,
-          teacher_telephone: that.$store.state.teacher_info.teacher_telephone
+        axios.post(that.$store.state.url_paths.add_exam, Qs.stringify({
+          exam_name: that.exam_name,
+          exam_time_begin: that.exam_time_begin,
+          exam_time_end: that.exam_time_end,
+          exam_publisher: that.exam_publisher,
+          exma_parent_course: that.$store.state.now_location.id
         }))
           .then(function (response) {
-            if (response.data === true) {
-              that.$q.notify({ message: '添加课程成功', position: 'top' })
-              that.$router.push('/course_manage')
-            } else if (response.data === false) {
-              that.$q.notify({ message: '添加课程失败', position: 'top', color: 'danger' })
+            if (response.data !== 0) {
+              that.$q.notify({ message: '添加考试成功', position: 'top' })
+              that.reload()
+            } else if (response.data === 0) {
+              that.$q.notify({ message: '添加考试失败', position: 'top', color: 'danger' })
             }
           })
           .catch(function (error) {
@@ -79,9 +110,9 @@
       },
 
       onReset () {
-        this.name = null
-        this.classroom = null
-        this.classtime = null
+        this.exam_name = null
+        this.exam_publisher = null
+        this.exma_parent_course = null
       }
     }
   }

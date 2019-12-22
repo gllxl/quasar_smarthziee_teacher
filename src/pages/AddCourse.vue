@@ -68,7 +68,7 @@
           .then(function (response) {
             if (response.data === true) {
               that.$q.notify({ message: '添加课程成功', position: 'top' })
-              that.$router.push('/course_manage')
+              that.reload();
             } else if (response.data === false) {
               that.$q.notify({ message: '添加课程失败', position: 'top', color: 'danger' })
             }
