@@ -7,6 +7,10 @@
       :columns="columns"
       row-key="name"
     />
+    <div style="padding-top: 30px">
+      <q-btn  color="red" label="删除课程" @click="deleteCourse" />
+    </div>
+
   </q-page>
 </template>
 
@@ -80,6 +84,18 @@
           })
           .catch(function (error) {
             that.$q.notify({ message: '获取课程信息失败', position: 'top', color: 'danger' })
+          })
+      },
+      deleteCourse(){
+        let that = this
+        axios.post(that.$store.state.url_paths.delete_course, Qs.stringify({
+          course_id: that.$store.state.now_location.data.courseId
+        }))
+          .then(function (response) {
+            that.$q.notify({ message: '删除成功', position: 'top'})
+          })
+          .catch(function (error) {
+            that.$q.notify({ message: '删除失败', position: 'top', color: 'danger' })
           })
       }
     }
