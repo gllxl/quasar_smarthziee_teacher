@@ -93,6 +93,7 @@
         }))
           .then(function (response) {
             that.$q.notify({ message: '删除成功', position: 'top'})
+            this.$router.push('/course_info')
           })
           .catch(function (error) {
             that.$q.notify({ message: '删除失败', position: 'top', color: 'danger' })
